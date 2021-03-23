@@ -5,7 +5,6 @@
 /results2/
 /output/
 /results3/
-/trained/
 /7399.png
 /actor.jpg
 /bacup__img_6.png
@@ -24,3 +23,6 @@
 /woman.jpgimg_gray_version.png
 /woman.jpgimg_result.png
 /tf-benchmark.py
+/places_out/
+/env/
+/cifar_results/
