@@ -9,8 +9,8 @@ from keras.utils import Sequence
 
 from config import batch_size, img_rows, img_cols, nb_neighbors
 
-image_folder = '/mnt/code/ImageNet-Downloader/image/resized'
-
+# image_folder = '/mnt/code/ImageNet-Downloader/image/resized'
+image_folder= "/Users/naveen/Documents/ML local Data/butte"
 
 def get_soft_encoding(image_ab, nn_finder, nb_q):
     h, w = image_ab.shape[:2]
@@ -23,7 +23,7 @@ def get_soft_encoding(image_ab, nn_finder, nb_q):
     sigma_neighbor = 5
     wts = np.exp(-dist_neighb ** 2 / (2 * sigma_neighbor ** 2))
     wts = wts / np.sum(wts, axis=1)[:, np.newaxis]
-    # format the tar get
+    # format the target
     y = np.zeros((ab.shape[0], nb_q)) # hx313
     idx_pts = np.arange(ab.shape[0])[:, np.newaxis]
     y[idx_pts, idx_neigh] = wts
@@ -36,9 +36,9 @@ class DataGenSequence(Sequence):
         self.usage = usage
 
         if usage == 'train':
-            names_file = 'train_names.txt'
+            names_file = '/Users/naveen/Documents/tensor_test2/testZhang/train_names.txt'
         else:
-            names_file = 'valid_names.txt'
+            names_file = '/Users/naveen/Documents/tensor_test2/testZhang/valid_names.txt'
 
         with open(names_file, 'r') as f:
             self.names = f.read().splitlines()
@@ -46,7 +46,7 @@ class DataGenSequence(Sequence):
         np.random.shuffle(self.names)
 
         # Load the array of quantized ab value
-        q_ab = np.load("data/pts_in_hull.npy")
+        q_ab = np.load("/Users/naveen/Documents/tensor_test2/testZhang/pts_in_hull.npy")
         self.nb_q = q_ab.shape[0]
         # Fit a NN to q_ab
         self.nn_finder = nn.NearestNeighbors(n_neighbors=nb_neighbors, algorithm='ball_tree').fit(q_ab)
@@ -64,6 +64,7 @@ class DataGenSequence(Sequence):
         batch_y = np.empty((length, out_img_rows, out_img_cols, self.nb_q), dtype=np.float32) # N x h x w x 313
 
         for i_batch in range(length):
+            # print(i_batch)
             name = self.names[i]
             filename = os.path.join(image_folder, name)
             # b: 0 <=b<=255, g: 0 <=g<=255, r: 0 <=r<=255.
@@ -93,6 +94,7 @@ class DataGenSequence(Sequence):
         return batch_x, batch_y
 
     def on_epoch_end(self):
+        # _gh=1
         np.random.shuffle(self.names)
 
 

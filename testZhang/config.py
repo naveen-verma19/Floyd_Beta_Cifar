@@ -1,10 +1,10 @@
-img_rows, img_cols = 256, 256
+img_rows, img_cols = 128, 128
 channel = 3
-batch_size = 32
+batch_size = 16
 epochs = 10000
 patience = 50
-num_train_samples = 529202
-num_valid_samples = 4268
+num_train_samples = 4912
+num_valid_samples = 40
 num_classes = 313
 kernel = 3
 weight_decay = 1e-3
